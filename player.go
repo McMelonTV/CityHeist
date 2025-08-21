@@ -42,12 +42,16 @@ var PlayerAnimationDirection = struct {
 
 var PlayerAnimationType = struct {
 	Default SpriteFrames.Instance
+	Idle    SpriteFrames.Instance
+	Walk    SpriteFrames.Instance
 }{
 	Default: Resource.Load[SpriteFrames.Instance]("res://animations/Player/default.tres"),
+	Idle:    Resource.Load[SpriteFrames.Instance]("res://animations/Player/idle.tres"),
+	Walk:    Resource.Load[SpriteFrames.Instance]("res://animations/Player/walk.tres"),
 }
 
 func (p *Player) Ready() {
-	p.Speed = Vector2.New(120, 120)
+	p.Speed = Vector2.New(100, 100)
 }
 
 func (p *Player) Process(delta Float.X) {
@@ -67,16 +71,15 @@ func (p *Player) Process(delta Float.X) {
 
 	if Vector2.Length(velocity) > 0 {
 		velocity = Vector2.Mul(Vector2.Normalized(velocity), p.Speed)
-		p.AnimatedSprite2D.Play()
+		p.AnimatedSprite2D.SetSpriteFrames(PlayerAnimationType.Walk)
 	} else {
-		p.AnimatedSprite2D.Stop()
+		p.AnimatedSprite2D.SetSpriteFrames(PlayerAnimationType.Idle)
 	}
 	position := p.AsNode2D().Position()
 	position = Vector2.Add(position, Vector2.MulX(velocity, delta))
 
 	p.AsNode2D().SetPosition(Vector2.Clamp(position, Vector2.Zero, p.AsCanvasItem().GetViewportRect().Size))
 
-	p.AnimatedSprite2D.SetSpriteFrames(PlayerAnimationType.Default)
 	if velocity.X != 0 {
 		if velocity.X < 0 {
 			p.AnimatedSprite2D.SetAnimation(PlayerAnimationDirection.Left)
@@ -90,6 +93,8 @@ func (p *Player) Process(delta Float.X) {
 			p.AnimatedSprite2D.SetAnimation(PlayerAnimationDirection.Down)
 		}
 	}
+
+	p.AnimatedSprite2D.Play()
 }
 
 func (p *Player) Start(pos Vector2.XY) {
