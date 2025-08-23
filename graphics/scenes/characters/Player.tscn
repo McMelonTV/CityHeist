@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://dtrgkis52myr5"]
+
+[ext_resource type="SpriteFrames" uid="uid://cujj5o0h6ptua" path="res://animations/characters/Player/idle.tres" id="1_pq8s5"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_msnu2"]
+
+[node name="Player" type="GamePlayer"]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = ExtResource("1_pq8s5")
+animation = &"down"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_msnu2")

@@ -1,0 +1,20 @@
+[gd_scene load_steps=2 format=3 uid="uid://cgxwqo1n5yplv"]
+
+[ext_resource type="PackedScene" uid="uid://dtrgkis52myr5" path="res://scenes/characters/Player.tscn" id="1_kqs1s"]
+
+[node name="World" type="Node2D"]
+
+[node name="Ground" type="TileMapLayer" parent="."]
+
+[node name="GroundOverlay" type="TileMapLayer" parent="."]
+
+[node name="ZStacker" type="Node2D" parent="."]
+
+[node name="Walls" type="TileMapLayer" parent="ZStacker"]
+
+[node name="Objects" type="TileMapLayer" parent="ZStacker"]
+
+[node name="Decorations" type="TileMapLayer" parent="ZStacker"]
+
+[node name="Player" parent="ZStacker" instance=ExtResource("1_kqs1s")]
+position = Vector2(424, 247)
