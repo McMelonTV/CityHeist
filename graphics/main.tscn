@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://dlageiqst3ary" path="res://scenes/World.tscn" id="2_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://cxwssa1iwnctl" path="res://scenes/ui/HUD.tscn" id="3_lquwl"]
 
-[node name="Main" type="Node"]
+[node name="Main" type="GameMain"]
 
 [node name="MainMenu" parent="." instance=ExtResource("1_h2yge")]
 

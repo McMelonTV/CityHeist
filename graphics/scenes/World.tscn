@@ -3,7 +3,7 @@
 [ext_resource type="TileSet" uid="uid://crxb4w0n81jcd" path="res://assets/tilesets/ModernExteriors/ExteriorTerrain.tres" id="1_2dftf"]
 [ext_resource type="PackedScene" uid="uid://cx2ityq8plxgo" path="res://scenes/characters/Player.tscn" id="2_bcbcq"]
 
-[node name="World" type="GameMain"]
+[node name="World" type="Node"]
 
 [node name="City" type="Node2D" parent="."]
 
