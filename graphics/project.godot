@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="CityHeist"
-run/main_scene="uid://dlageiqst3ary"
+run/main_scene="uid://bc6bv3oln6lus"
 run/main_loop_type="GoMainLoop"
 config/features=PackedStringArray("4.4")
 
