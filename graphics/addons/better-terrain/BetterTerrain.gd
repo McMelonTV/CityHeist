@@ -20,6 +20,7 @@ extends Node
 
 ## The meta-data key used to store terrain information.
 const TERRAIN_META = &"_better_terrain"
+
 ## The current version. Used to handle future upgrades.
 const TERRAIN_SYSTEM_VERSION = "0.2"
 var _tile_cache =  {}
@@ -39,11 +40,13 @@ enum TerrainType {
     DECORATION, ## Fills empty tiles by matching adjacent tiles
     MAX,
 }
+
 enum TileCategory {
     EMPTY = -1, ## An empty cell, or a tile marked as decoration
     NON_TERRAIN = -2, ## A non-empty cell that does not contain a terrain tile
     ERROR = -3
 }
+
 enum SymmetryType {
     NONE,
     MIRROR, ## Horizontally mirror
@@ -403,7 +406,6 @@ func _widen_with_exclusion(tm: TileMapLayer, coords: Array, exclusion: Rect2i) -
                 result[t] = true
     return result.keys()
 
-
 # Terrains
 
 ## Returns an [Array] of categories. These are the terrains in the [TileSet] which
@@ -587,9 +589,6 @@ _set_terrain_meta(ts, ts_meta)
 _clear_invalid_peering_types(ts)
 _purge_cache(ts)
 return true
-
-
-
 
 
 ## Swaps the terrains at [code]index1[/code] and [code]index2[/code] in [TileSet].

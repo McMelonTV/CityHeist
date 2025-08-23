@@ -4,6 +4,7 @@ extends Control
 signal paste_occurred
 signal change_zoom_level(value)
 signal terrain_updated(index)
+
 @onready var checkerboard := get_theme_icon("Checkerboard", "EditorIcons")
 
 @onready var paint_symmetry_icons := [
@@ -20,32 +21,33 @@ signal terrain_updated(index)
 
 # Draw checkerboard and tiles with specific  materials in
 # individual canvas items via rendering server
-var _canvas_item_map                            =  {}
+var _canvas_item_map = {}
 var _canvas_item_background: RID
 var tileset: TileSet
-var disabled_sources: Array[int]                =  []: set = set_disabled_sources
-var paint                                       := BetterTerrain.TileCategory.NON_TERRAIN
-var paint_symmetry                              := BetterTerrain.SymmetryType.NONE
-var highlighted_tile_part                       := { valid = false }
-var zoom_level                                  := 1.0
+var disabled_sources: Array[int] = []: set = set_disabled_sources
+var paint                 := BetterTerrain.TileCategory.NON_TERRAIN
+var paint_symmetry        := BetterTerrain.SymmetryType.NONE
+var highlighted_tile_part := { valid = false }
+var zoom_level            := 1.0
 var tiles_size: Vector2
 var tile_size: Vector2i
 var tile_part_size: Vector2
 var alternate_size: Vector2
-var alternate_lookup                            := []
+var alternate_lookup := []
 var initial_click: Vector2i
 var prev_position: Vector2i
 var current_position: Vector2i
 var selection_start: Vector2i
 var selection_end: Vector2i
 var selection_rect: Rect2i
-var selected_tile_states: Array[Dictionary]     =  []
-var copied_tile_states: Array[Dictionary]       =  []
-var staged_paste_tile_states: Array[Dictionary] =  []
-var pick_icon_terrain: int                      =  -1
-var pick_icon_terrain_cancel                    := false
+var selected_tile_states: Array[Dictionary]     = []
+var copied_tile_states: Array[Dictionary]       = []
+var staged_paste_tile_states: Array[Dictionary] = []
+var pick_icon_terrain: int   =  -1
+var pick_icon_terrain_cancel := false
 var undo_manager: EditorUndoRedoManager
 var terrain_undo
+
 # Modes for painting
 enum PaintMode {
     NO_PAINT,
@@ -55,7 +57,9 @@ enum PaintMode {
     SELECT,
     PASTE
 }
+
 var paint_mode := PaintMode.NO_PAINT
+
 # Actual interactions for painting
 enum PaintAction {
     NO_ACTION,
@@ -68,9 +72,8 @@ enum PaintAction {
     SELECT,
     PASTE
 }
-var paint_action            := PaintAction.NO_ACTION
+var paint_action := PaintAction.NO_ACTION
 const ALTERNATE_TILE_MARGIN := 18
-
 
 func _enter_tree() -> void:
     _canvas_item_background = RenderingServer.canvas_item_create()
@@ -91,7 +94,10 @@ func refresh_tileset(ts: TileSet) -> void:
     tiles_size = Vector2.ZERO
     alternate_size = Vector2.ZERO
     alternate_lookup = []
-    disabled_sources = []
+    disabled_sources = disabled_sources.filter(
+        func(id):
+            return ts.has_source(id)
+            )
 
     if !tileset:
         return

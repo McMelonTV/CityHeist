@@ -1,15 +1,15 @@
 [gd_scene load_steps=3 format=3 uid="uid://cgxwqo1n5yplv"]
 
+[ext_resource type="TileSet" uid="uid://cfnlf3xy6gikk" path="res://tilesets/Terrain.tres" id="1_32lhk"]
 [ext_resource type="PackedScene" uid="uid://dtrgkis52myr5" path="res://scenes/characters/Player.tscn" id="1_kqs1s"]
-
-[sub_resource type="TileSet" id="TileSet_kqs1s"]
 
 [node name="World" type="Node2D"]
 
 [node name="Ground" type="TileMapLayer" parent="."]
-tile_set = SubResource("TileSet_kqs1s")
+tile_set = ExtResource("1_32lhk")
 
 [node name="GroundOverlay" type="TileMapLayer" parent="."]
+tile_set = ExtResource("1_32lhk")
 
 [node name="Stacker" type="Node2D" parent="."]
 y_sort_enabled = true

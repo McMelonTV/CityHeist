@@ -3,6 +3,7 @@ extends Control
 
 signal update_overlay
 signal force_show_terrains
+
 # The maximum individual tiles the overlay will draw before shortcutting the display
 # To prevent editor lag when drawing large rectangles or filling large areas
 const MAX_CANVAS_RENDER_TILES  =  1500
@@ -16,22 +17,29 @@ const MAX_ZOOM_SETTING         := "editor/better_terrain/max_zoom_amount"
 @onready var rectangle_button: Button = $VBox/Toolbar/Rectangle
 @onready var fill_button: Button = $VBox/Toolbar/Fill
 @onready var replace_button: Button = $VBox/Toolbar/Replace
+
 @onready var paint_type: Button = $VBox/Toolbar/PaintType
 @onready var paint_terrain: Button = $VBox/Toolbar/PaintTerrain
 @onready var select_tiles: Button = $VBox/Toolbar/SelectTiles
+
 @onready var paint_symmetry: Button = $VBox/Toolbar/PaintSymmetry
 @onready var symmetry_options: OptionButton = $VBox/Toolbar/SymmetryOptions
+
 @onready var shuffle_random: Button = $VBox/Toolbar/ShuffleRandom
 @onready var zoom_slider_container: VBoxContainer = $VBox/Toolbar/ZoomContainer
+
 @onready var source_selector: MenuBar = $VBox/Toolbar/Sources
 @onready var source_selector_popup: PopupMenu = $VBox/Toolbar/Sources/Sources
+
 @onready var clean_button: Button = $VBox/Toolbar/Clean
 @onready var layer_up: Button = $VBox/Toolbar/LayerUp
 @onready var layer_down: Button = $VBox/Toolbar/LayerDown
 @onready var layer_highlight: Button = $VBox/Toolbar/LayerHighlight
 @onready var layer_grid: Button = $VBox/Toolbar/LayerGrid
+
 @onready var grid_mode_button: Button = $VBox/HSplit/Terrains/LowerToolbar/GridMode
 @onready var quick_mode_button: Button = $VBox/HSplit/Terrains/LowerToolbar/QuickMode
+
 @onready var edit_tool_buttons: HBoxContainer = $VBox/HSplit/Terrains/LowerToolbar/EditTools
 @onready var add_terrain_button: Button = $VBox/HSplit/Terrains/LowerToolbar/EditTools/AddTerrain
 @onready var edit_terrain_button: Button = $VBox/HSplit/Terrains/LowerToolbar/EditTools/EditTerrain
@@ -39,9 +47,11 @@ const MAX_ZOOM_SETTING         := "editor/better_terrain/max_zoom_amount"
 @onready var move_up_button: Button = $VBox/HSplit/Terrains/LowerToolbar/EditTools/MoveUp
 @onready var move_down_button: Button = $VBox/HSplit/Terrains/LowerToolbar/EditTools/MoveDown
 @onready var remove_terrain_button: Button = $VBox/HSplit/Terrains/LowerToolbar/EditTools/RemoveTerrain
+
 @onready var scroll_container: ScrollContainer = $VBox/HSplit/Terrains/Panel/ScrollContainer
 @onready var terrain_list: HFlowContainer = $VBox/HSplit/Terrains/Panel/ScrollContainer/TerrainList
 @onready var tile_view: Control = $VBox/HSplit/Panel/ScrollArea/TileView
+
 
 var selected_entry := -2
 var tilemap: TileMapLayer
@@ -59,16 +69,20 @@ enum PaintMode {
     PAINT,
     ERASE
 }
+
 enum PaintAction {
     NO_ACTION,
     LINE,
     RECT
 }
+
 enum SourceSelectors {
     ALL = 1000000,
     NONE = 1000001,
 }
+
 var paint_mode := PaintMode.NO_PAINT
+
 var paint_action := PaintAction.NO_ACTION
 
 
@@ -230,7 +244,11 @@ func tiles_changed() -> void:
         name += " (ID: %d)" % source_id
 
         source_selector_popup.add_check_item(name, source_id)
-        source_selector_popup.set_item_checked(source_selector_popup.get_item_index(source_id), true)
+
+        source_selector_popup.set_item_checked(
+            source_selector_popup.get_item_index(source_id),
+            not tile_view.disabled_sources.has(source_id)
+        )
     source_selector.visible = source_selector_popup.item_count > 3 # All, None and more than one source
 
     update_tile_view_paint()
@@ -299,9 +317,6 @@ undo_manager.add_do_method(self, &"tiles_changed")
 terrain_undo.create_peering_restore_point(undo_manager, tileset)
 undo_manager.add_undo_method(self, &"tiles_changed")
 undo_manager.commit_action()
-
-
-
 
 
 func _on_grid_mode_pressed() -> void:

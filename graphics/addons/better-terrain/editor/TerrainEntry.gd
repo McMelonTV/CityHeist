@@ -2,6 +2,7 @@
 extends PanelContainer
 
 signal select(index)
+
 @onready var color_panel := %Color
 @onready var terrain_icon_slot := %TerrainIcon
 @onready var type_icon_slot := %TypeIcon
@@ -24,7 +25,6 @@ var _icon_draw_connected := false
 
 func _ready():
     update()
-
 
 func update():
     if !terrain or !terrain.valid:

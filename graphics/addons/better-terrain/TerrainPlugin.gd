@@ -5,7 +5,6 @@ const AUTOLOAD_NAME = "BetterTerrain"
 var dock: Control
 var button: Button
 
-
 func _enter_tree() -> void:
     # Wait for autoloads to register
     await get_tree().process_frame
@@ -31,9 +30,6 @@ button = add_control_to_bottom_panel(dock, "Terrain")
 button.toggled.connect(dock.about_to_be_visible)
 dock.force_show_terrains.connect(button.toggled.emit.bind(true))
 button.visible = false
-
-
-
 
 
 func _exit_tree() -> void:

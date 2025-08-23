@@ -1,13 +1,16 @@
 @tool
 extends EditorPlugin
 
+
 #------------------------------- SETUP -------------------------------
 # Utilities
-var Utils             = preload("res://addons/godot_super-wakatime/utils.gd").new()
+var Utils = preload("res://addons/godot_super-wakatime/utils.gd").new()
 var DecompressorUtils = preload("res://addons/godot_super-wakatime/decompressor.gd").new()
+
 # Hearbeat class
-const HeartBeat    = preload("res://addons/godot_super-wakatime/heartbeat.gd")
+const HeartBeat = preload("res://addons/godot_super-wakatime/heartbeat.gd")
 var last_heartbeat = HeartBeat.new()
+
 # Paths, Urls
 const PLUGIN_PATH: String = "res://addons/godot_super-wakatime"
 const ZIP_PATH: String    = "%s/wakatime.zip" % PLUGIN_PATH
@@ -16,12 +19,14 @@ const WAKATIME_URL_FMT: String     = \
 const DECOMPERSSOR_URL_FMT: String = \
 "https://github.com/ouch-org/ouch/releases/download/0.3.1/{ouch_build}"
 # Names for menu
-const API_MENU_ITEM: String    = "Wakatime API key"
+const API_MENU_ITEM: String = "Wakatime API key"
 const CONFIG_MENU_ITEM: String = "Wakatime Config File"
+
 # Directories to grab wakatime from
-var wakatime_dir     = null
-var wakatime_cli     = null
+var wakatime_dir = null
+var wakatime_cli = null
 var decompressor_cli = null
+
 var ApiKeyPrompt: PackedScene = preload("res://addons/godot_super-wakatime/api_key_prompt.tscn")
 var Counter: PackedScene      = preload("res://addons/godot_super-wakatime/counter.tscn")
 # Set platform
@@ -34,7 +39,7 @@ var last_time: int          = 0
 var previous_state: String  = ''
 const LOG_INTERVAL: int     = 60000
 var scene_mode: bool        = false
-var key_get_tries: int   = 0
+var key_get_tries: int = 0
 var counter_instance: Node
 var current_time: String = "0 hrs, 0mins"
 
@@ -101,7 +106,6 @@ func _input(event: InputEvent) -> void:
         if file != '' and file:
             handle_activity_scene(file)
 
-
 func setup_plugin() -> void:
     """Setup Wakatime plugin, download dependencies if needed, initialize menu"""
     Utils.plugin_print("Setting up %s" % get_user_agent())
@@ -124,7 +128,6 @@ func setup_plugin() -> void:
     var script_editor: ScriptEditor = get_editor_interface().get_script_editor()
     script_editor.call_deferred("connect", "editor_script_changed", Callable(self,
     "_on_script_changed"))
-
 
 func _disable_plugin() -> void:
     """Cleanup after disabling plugin"""
@@ -269,9 +272,6 @@ scene_mode = false
 WorkerThreadPool.add_task(cmd_callable)
 last_heartbeat = heartbeat
 
-
-
-
 func _find_active_script_editor():
     """Return currently used script editor"""
     # Get script editor
@@ -282,7 +282,6 @@ func _find_active_script_editor():
     if current_editor:
         return _find_code_edit_recursive(script_editor.get_current_editor())
     return null
-
 
 func _find_code_edit_recursive(node: Node) -> CodeEdit:
     """Find recursively code editor in a node"""
@@ -383,7 +382,6 @@ func convert_time(complex_time: String):
 
     return str(hours) + " hrs, " + str(minutes) + " mins"
     """
-
 
 #------------------------------- FILE FUNCTIONS -------------------------------
 func open_config() -> void:
@@ -551,7 +549,6 @@ func delete_file(path: String) -> void:
         Utils.plugin_print_err("Failed to clean unnecesary file at %s" % path)
     else:
         Utils.plugin_print("Clean unncecesary file at %s" % path)
-
 
 #------------------------------- API KEY FUNCTIONS -------------------------------
 
