@@ -8,13 +8,18 @@
 
 [node name="GroundOverlay" type="TileMapLayer" parent="."]
 
-[node name="ZStacker" type="Node2D" parent="."]
+[node name="Stacker" type="Node2D" parent="."]
+y_sort_enabled = true
 
-[node name="Walls" type="TileMapLayer" parent="ZStacker"]
+[node name="Walls" type="TileMapLayer" parent="Stacker"]
+y_sort_enabled = true
 
-[node name="Objects" type="TileMapLayer" parent="ZStacker"]
+[node name="Objects" type="TileMapLayer" parent="Stacker"]
+y_sort_enabled = true
 
-[node name="Decorations" type="TileMapLayer" parent="ZStacker"]
+[node name="Decorations" type="TileMapLayer" parent="Stacker"]
+y_sort_enabled = true
 
-[node name="Player" parent="ZStacker" instance=ExtResource("1_kqs1s")]
+[node name="Player" parent="Stacker" instance=ExtResource("1_kqs1s")]
+y_sort_enabled = true
 position = Vector2(424, 247)
