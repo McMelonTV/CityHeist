@@ -1,10 +1,13 @@
-[gd_scene load_steps=2 format=3 uid="uid://cgxwqo1n5yplv"]
+[gd_scene load_steps=3 format=3 uid="uid://cgxwqo1n5yplv"]
 
 [ext_resource type="PackedScene" uid="uid://dtrgkis52myr5" path="res://scenes/characters/Player.tscn" id="1_kqs1s"]
+
+[sub_resource type="TileSet" id="TileSet_kqs1s"]
 
 [node name="World" type="Node2D"]
 
 [node name="Ground" type="TileMapLayer" parent="."]
+tile_set = SubResource("TileSet_kqs1s")
 
 [node name="GroundOverlay" type="TileMapLayer" parent="."]
 
